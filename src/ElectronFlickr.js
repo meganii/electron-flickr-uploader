@@ -133,4 +133,26 @@ export default class ElectronFlickr {
       next(err, res);
     });
   }
+
+  getPhoto(photoId, next) {
+    this.options = utils.setAuthVals(this.options);
+    var queryArguments = {
+      method:                 "flickr.photos.getContext",
+      api_key:                this.options.api_key,
+      photo_id:               photoId,
+      oauth_token:            this.options.access_token,
+    };
+
+    const queryString = utils.formQueryString(queryArguments);
+    const url = "https://api.flickr.com/services/rest";
+    const data = utils.formBaseString("GET", url, queryString);
+    const signature = utils.sign(data, this.options.secret, this.options.access_token_secret);
+    const flickrURL = url + "?" + queryString + "&oauth_signature=" + signature;
+
+    request
+    .get(flickrURL)
+    .end( (err, res) => {
+      next(err, res);
+    });
+  }
 }

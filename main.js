@@ -78,8 +78,18 @@ ipcMain.on('upload', (event, arg) => {
   const flickr = new ElectronFlickr(options);
   flickr.upload(arg, (err, res) => {
       console.log("upload" + res.text);
+      utils.parseXMLResponse(res.text, (err, data) => {
+        getPhoto(data.rsp.photoid);
+      });
   });
-})
+});
+
+function getPhoto(photoId) {
+  const flickr = new ElectronFlickr(options);
+  flickr.getPhoto(photoId, (err, res) => {
+      console.log("get" + res.text);
+  });
+}
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.

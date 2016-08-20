@@ -1,6 +1,7 @@
 "use strict";
 
 const crypto = require("crypto");
+const {to_json} = require('xmljson');
 
 export default class Utils {
 
@@ -11,7 +12,7 @@ export default class Utils {
     const digest = hmac.digest("base64");
     return encodeURIComponent(digest);
   }
-  
+
   encodeRFC5987ValueChars(str) {
     return encodeURIComponent(str).
     replace(/['()!]/g, escape).
@@ -56,5 +57,11 @@ export default class Utils {
     });
 
     return response;
+  }
+
+  parseXMLResponse(xml, next) {
+    to_json(xml, function (error, data) {
+        next(error, data);
+    });
   }
 }
