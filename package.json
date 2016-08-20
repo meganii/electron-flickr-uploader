@@ -28,6 +28,7 @@
     "electron-prebuilt": "^1.2.0"
   },
   "dependencies": {
+    "dotenv": "^2.0.0",
     "superagent": "^2.2.0"
   }
 }

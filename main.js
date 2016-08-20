@@ -6,14 +6,15 @@ import Utils from './src/utils.js';
 const utils = new Utils();
 const {ipcMain} = require('electron');
 
+require('dotenv').config()
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
 
 let options = {
-  api_key:     "YOUR_FLICKR_API_KEY",
-  secret:      "YOUR_FLICKR_SECRET_KEY",
+  api_key:     process.env.API_KEY,
+  secret:      process.env.SECRET,
   permissions: "write",
   callback:    "http://localhost",
 };
